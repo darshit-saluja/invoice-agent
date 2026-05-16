@@ -71,7 +71,7 @@ python tools/compose_email.py '<json>'
 python tools/send_email.py '{"to": "...", "subject": "...", "body": "..."}'
 ```
 - Sends via Gmail API
-- Recipient: `client_email` from extracted data (fallback: `darshit2419@gmail.com`)
+- Recipient: `BILLING_TEAM_EMAIL` from `.env`
 
 ### Step 9 — Mark as processed
 `run_pipeline.py` appends the file ID to `.tmp/processed_ids.txt` on success.
@@ -89,7 +89,7 @@ python tools/send_email.py '{"to": "...", "subject": "...", "body": "..."}'
 ## Edge Cases
 - **Non-PDF files in folder**: `drive_monitor.py` filters by `mimeType='application/pdf'`
 - **Scanned/image PDFs**: Text extraction will return empty; the pipeline will complete but data fields will be blank
-- **Missing client_email**: `run_pipeline.py` falls back to `darshit2419@gmail.com` as recipient
+- **Recipient address**: always read from `BILLING_TEAM_EMAIL` in `.env`
 - **Gemini returns markdown-wrapped JSON**: Both LLM tools strip triple-backtick fences before parsing
 - **Token expiry**: All tools handle token refresh automatically via `google-auth`
 
