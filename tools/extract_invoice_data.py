@@ -1,5 +1,5 @@
 """
-Uses Gemini 2.5 Flash via kie.ai to extract structured fields from invoice text.
+Uses Claude Haiku 4.5 via kie.ai to extract structured fields from invoice text.
 
 Usage:
     python tools/extract_invoice_data.py <txt_path>

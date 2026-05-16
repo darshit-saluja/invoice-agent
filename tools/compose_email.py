@@ -1,5 +1,5 @@
 """
-Uses Gemini 2.5 Flash via kie.ai to compose a professional invoice email.
+Uses Claude Haiku 4.5 via kie.ai to compose a professional invoice email.
 
 Usage:
     python tools/compose_email.py '<json_string>'

@@ -9,7 +9,7 @@ Run `tools/drive_monitor.py` to list unprocessed file IDs. Then run `tools/run_p
 ## Required Inputs
 - `credentials.json` — Google OAuth client secrets (get from Google Cloud Console)
 - `token.json` — Generated automatically on first run (OAuth browser flow)
-- `KIE_API_KEY` in `.env` — kie.ai API key for Gemini 2.5 Flash
+- `KIE_API_KEY` in `.env` — kie.ai API key for Claude Haiku 4.5
 
 ## Tools (in execution order)
 
@@ -46,8 +46,8 @@ python tools/extract_pdf_text.py <pdf_path>
 ```
 python tools/extract_invoice_data.py <txt_path>
 ```
-- Calls Gemini 2.5 Flash via kie.ai
-- Endpoint: `POST https://api.kie.ai/gemini-2-5-flash/v1/chat/completions`
+- Calls Claude Haiku 4.5 via kie.ai
+- Endpoint: `POST https://api.kie.ai/claude/v1/messages`
 - Extracts: `invoice_number`, `client_name`, `client_email`, `client_address`, `company_name`, `total_amount`
 - Prints JSON to stdout
 
@@ -62,7 +62,7 @@ python tools/update_sheets.py '<json>'
 ```
 python tools/compose_email.py '<json>'
 ```
-- Calls Gemini 2.5 Flash via kie.ai
+- Calls Claude Haiku 4.5 via kie.ai
 - Returns JSON with `subject` and `body`
 - Email has no salutation, includes all invoice fields
 
@@ -84,13 +84,13 @@ python tools/send_email.py '{"to": "...", "subject": "...", "body": "..."}'
 - Any tool that fails will print to stderr and exit with code 1
 - `run_pipeline.py` will halt the pipeline at the failing step and exit
 - Re-running `run_pipeline.py` with the same file ID is safe — the file ID is only added to `processed_ids.txt` on full success
-- If `pdfplumber` extracts no text (scanned image PDF), `extract_pdf_text.py` will produce an empty file; Gemini will return empty strings for all fields — check the sheet row and reprocess manually
+- If `pdfplumber` extracts no text (scanned image PDF), `extract_pdf_text.py` will produce an empty file; the LLM will return empty strings for all fields — check the sheet row and reprocess manually
 
 ## Edge Cases
 - **Non-PDF files in folder**: `drive_monitor.py` filters by `mimeType='application/pdf'`
 - **Scanned/image PDFs**: Text extraction will return empty; the pipeline will complete but data fields will be blank
 - **Recipient address**: always read from `BILLING_TEAM_EMAIL` in `.env`
-- **Gemini returns markdown-wrapped JSON**: Both LLM tools strip triple-backtick fences before parsing
+- **LLM returns markdown-wrapped JSON**: Both LLM tools strip triple-backtick fences before parsing
 - **Token expiry**: All tools handle token refresh automatically via `google-auth`
 
 ## Scheduling (optional)

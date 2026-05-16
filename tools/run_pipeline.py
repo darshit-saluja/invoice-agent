@@ -7,7 +7,7 @@ Usage:
 Flow:
     1. Download invoice from Drive
     2. Extract text from PDF
-    3. Extract structured data via Gemini 2.5 Flash
+    3. Extract structured data via Claude Haiku 4.5
     4. Check for duplicate invoice number in Google Sheets
        - Duplicate: notify billing team → move to INVOICES FAILED
        - Not duplicate: send details email → update Sheets → move to INVOICES PROCESSED
@@ -70,7 +70,7 @@ def main():
         txt_path, _ = run(["python", "tools/extract_pdf_text.py", pdf_path])
         print(f"      Text at {txt_path}")
 
-        print("[3/4] Extracting invoice data via Gemini 2.5 Flash...")
+        print("[3/4] Extracting invoice data via Claude Haiku 4.5...")
         invoice_json, _ = run(["python", "tools/extract_invoice_data.py", txt_path])
         invoice_data = json.loads(invoice_json)
         print(f"      Data: {invoice_json}")

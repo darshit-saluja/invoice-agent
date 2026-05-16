@@ -17,7 +17,7 @@ Google Drive (new PDF)
  extract_pdf_text.py    ← pulls raw text via pdfplumber
        │
        ▼
-extract_invoice_data.py ← Gemini 2.5 Flash extracts structured fields
+extract_invoice_data.py ← Claude Haiku 4.5 extracts structured fields
        │
        ▼
   check_duplicate.py    ← checks Google Sheets for existing invoice number
@@ -31,7 +31,7 @@ extract_invoice_data.py ← Gemini 2.5 Flash extracts structured fields
 
 ## Tech Stack
 
-- **LLM:** Gemini 2.5 Flash via [kie.ai](https://kie.ai)
+- **LLM:** Claude Haiku 4.5 via [kie.ai](https://kie.ai) — any capable, low-cost model works here (invoice extraction is straightforward). Avoid heavyweight models like Claude Opus 4.7; a fast, affordable model is the right call for this task.
 - **Storage:** Google Sheets (invoice database)
 - **Trigger:** Google Drive folder watch
 - **Email:** Gmail API
